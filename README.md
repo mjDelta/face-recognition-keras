@@ -15,9 +15,9 @@ The procedure of this repository includes `face detection`, `affine transformati
 - [ ] Xception backend
 - [ ] DenseNet backend
 
-## <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/align_face.py">Face Detection and Affine Transformation</a>
-I use Dlib and opencv for this preprocessing procedure. Dlib does the quick face detection, while opencv does cropping and affine transformation. </br>
-
+## Face Detection and Affine Transformation
+I use Dlib and opencv for this preprocessing procedure <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/align_face.py">align_face.py</a>. Dlib does the quick face detection, while opencv does cropping and affine transformation. </br>
+![image](https://github.com/mjDelta/face-recognition-keras/blob/master/imgs/preprocessing.png)</br>
 ## Different Backends
 ## Choose a Threshold
 ## Results
