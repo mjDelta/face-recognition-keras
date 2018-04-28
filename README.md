@@ -12,6 +12,8 @@ The procedure of this repository includes `face detection`, `affine transformati
 - [ ] MobileNet backend
 - [ ] VGG16 backend
 - [ ] ResNet50 backend
+- [ ] Xception backend
+- [ ] DenseNet backend
 
 ## Face Detection and Affine Transformation
 ## Different Backends
