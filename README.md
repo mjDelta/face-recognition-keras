@@ -1,5 +1,5 @@
 # face-recognition-keras
-The procedure of this repository includes `face detection`, `affine transformation`, `extract face features`, `find a threshold to spilt faces`.</br>
+The procedure of this repository includes `face detection`, `affine transformation`, `extract face features`, `find a threshold to spilt faces`. And the results are evaluated on the [LFW](http://vis-www.cs.umass.edu/lfw/) datasets.</br>
 
 ### Requirements:</br>
 * dlib(19.10.0)
@@ -15,7 +15,9 @@ The procedure of this repository includes `face detection`, `affine transformati
 - [ ] Xception backend
 - [ ] DenseNet backend
 
-## Face Detection and Affine Transformation
+## <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/align_face.py">Face Detection and Affine Transformation</a>
+I use Dlib and opencv for this preprocessing procedure. Dlib does the quick face detection, while opencv does cropping and affine transformation. </br>
+
 ## Different Backends
 ## Choose a Threshold
 ## Results
