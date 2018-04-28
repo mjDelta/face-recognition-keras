@@ -1,5 +1,5 @@
 # face-recognition-keras
-#### The procedure of this repository includes `face detection`, `affine transformation`, `extract face features`, `find a threshold to spilt faces`.</br>
+The procedure of this repository includes `face detection`, `affine transformation`, `extract face features`, `find a threshold to spilt faces`.</br>
 
 ### Requirements:</br>
 * dlib(19.10.0)
