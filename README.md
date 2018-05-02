@@ -8,7 +8,7 @@ The procedure of this repository includes `face detection`, `affine transformati
 * opencv-python(3.4.0.12)
 
 ## Todo List
-- [ ] InceptionV3 backend
+- [x] InceptionV3 backend
 - [ ] MobileNet backend
 - [ ] VGG16 backend
 - [ ] ResNet50 backend
