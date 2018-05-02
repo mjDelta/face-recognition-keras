@@ -19,6 +19,8 @@ The procedure of this repository includes `face detection`, `affine transformati
 I use Dlib and opencv for this preprocessing procedure <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/align_face.py">align_face.py</a>. Dlib does the quick face detection, while opencv does cropping and affine transformation. </br>
 ![image](https://github.com/mjDelta/face-recognition-keras/blob/master/imgs/preprocessing.png)</br>
 ## Features Extraction with Deep Learning
+I use several basical deep learning model to extract 128 features from the preprocessed images. And the loss is `triplet loss`, which I think is the core of facenet. Triplet loss convert the distance among those embeddings into Euclidean distance and do BP operator on the triplet loss to optimize feature extractor.</br>
+
 ## Choose a Threshold
 ## Results
 
