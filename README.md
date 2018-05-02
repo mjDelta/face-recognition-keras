@@ -20,7 +20,11 @@ I use Dlib and opencv for this preprocessing procedure <a href="https://github.c
 ![image](https://github.com/mjDelta/face-recognition-keras/blob/master/imgs/preprocessing.png)</br>
 ## Features Extraction with Deep Learning
 I use several basical deep learning model to extract 128 features from the preprocessed images. And the loss is `triplet loss`, which I think is the core of facenet. Triplet loss convert the distance among those embeddings into Euclidean distance and do BP operator on the triplet loss to optimize feature extractor.</br>
-
+In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/backends.py">backends.py</a>, I defined sever base deep learning model as the base of feature extractor, making it easier to switch different bases and compare results.</br>
+In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/frontends.py">frontends.py</a>, I combined the backends with `Dense` Layer as the final feature extractor and defined the triplet loss.</br>
+In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/train.py">train.py</a>, I trained models with feature extractor.</br>
 ## Choose a Threshold
+As triplet loss is defined by Euclidean distance, we don't have a threshold to split embeddings. So, we need to choose a threshold.</br>
+In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.py">test.py</a>, I searched threshold violently.</br>
 ## Results
 
