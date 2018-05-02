@@ -11,4 +11,4 @@ facenet.summary()
 
 train_g=triplet_generator(dir_path="lfw_alig2",batch_size=16)
 facenet.fit_generator(train_g,epochs=500,steps_per_epoch=115,
-											callbacks=[ModelCheckpoint(BASE_MODEL+".h5",monitor="val_loss",mode="min")])
+		callbacks=[ModelCheckpoint(BASE_MODEL+".h5",monitor="val_loss",mode="min")])
