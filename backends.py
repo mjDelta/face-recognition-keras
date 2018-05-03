@@ -1,6 +1,8 @@
 from keras.layers import Dense,Conv2D,BatchNormalization,MaxPooling2D,AveragePooling2D,Activation,Input,concatenate,Flatten
 from keras.models import Model
-
+import keras.backend as K
+from my_conv_utils import DepthwiseConv2D
+from keras.layers import add
 ROW_SIZE=96
 COL_SIZE=96
 ALPHA=0.125
@@ -116,7 +118,93 @@ def inceptionv3():
 	#print(model.summary())
 	return model
 
+def vgg16():
+	input_=Input(shape=(96,96,3))
+
+	def conv_(filters,x):
+		return Conv2D(int(filters*ALPHA),(3,3),padding="same",activation="relu")(x)
+
+	#block1
+	block1_conv1=conv_(64,input_)
+	block1_conv2=conv_(64,block1_conv1)
+	block1_pool1=MaxPooling2D()(block1_conv2)
+
+	#block2
+	block2_conv1=conv_(128,block1_pool1)
+	block2_conv2=conv_(128,block2_conv1)
+	block2_pool1=MaxPooling2D()(block2_conv2)
+
+	#block3
+	block3_conv1=conv_(256,block2_pool1)
+	block3_conv2=conv_(256,block3_conv1)
+	block3_conv3=conv_(256,block3_conv2)
+	block3_pool1=MaxPooling2D()(block3_conv3)
+
+	#block4
+	block4_conv1=conv_(256,block3_pool1)
+	block4_conv2=conv_(256,block4_conv1)
+	block4_conv3=conv_(256,block4_conv2)
+	block4_pool1=MaxPooling2D()(block4_conv3)
+
+	#block5
+	block5_conv1=conv_(256,block4_pool1)
+	block5_conv2=conv_(256,block5_conv1)
+	block5_conv3=conv_(256,block5_conv2)
+	block5_pool1=MaxPooling2D()(block5_conv3)
+
+	model=Model(input_,block5_pool1)
+
+	return model
+
+def mobilenetv2():
+	def relu6(x):
+		return K.relu(x,max_value=6)
+
+	def conv_(inputs,filters,kernel_size=(3,3),strides=(1,1)):
+		x=Conv2D(int(filters*ALPHA),kernel_size,strides=strides,padding="same")(inputs)
+		x=BatchNormalization()(x)
+		x=Activation(relu6)(x)
+		return x
+
+	def mini_bottleneck(inputs,filters,s,t,r=False):
+		x=conv_(inputs,filters*t,kernel_size=(1,1))
+
+		x=DepthwiseConv2D((3,3),strides=(s,s),depth_multiplier=1,padding="same")(x)
+		x=BatchNormalization()(x)
+		x=Activation(relu6)(x)
+
+		x=Conv2D(int(filters*ALPHA),(1,1),strides=(1,1),padding="same")(x)
+		x=BatchNormalization()(x)
+
+		if r:
+			x=add([x,inputs])
+
+		return x
+
+	def bottleneck(inputs,filters,n,s,t):
+		x=mini_bottleneck(inputs,filters,s,t)
+
+		for i in range(1,n):
+			x=mini_bottleneck(x,filters,1,t,True)
+
+		return x
+
+	input_=Input(shape=(96,96,3))
+
+	x=conv_(input_,32,strides=(2,2))
+
+	x=bottleneck(x,16,1,1,1)
+	x=bottleneck(x,24,2,2,6)
+	x=bottleneck(x,32,3,2,6)
+	x=bottleneck(x,64,4,2,6)
+	x=bottleneck(x,96,3,1,6)
+	x=bottleneck(x,160,3,2,6)
+	x=bottleneck(x,320,1,1,6)
+
+	model=Model(input_,x)
+
+	return model
 
 if __name__=="__main__":
-	model=inceptionv3()
-	mdoel.summary()
+	model=mobilenetv2()
+	model.summary()
