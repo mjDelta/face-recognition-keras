@@ -1,15 +1,14 @@
 from keras.layers import Dense,Flatten,Input,Layer
 from keras.models import Model
-from backends import inceptionv3
+from backends import inceptionv3,vgg16,mobilenetv2
 import keras.backend as K
 
 alpha=0.2
-BASE_MODEL="INCEPTIONV3"##choose from ["INCEPTIONV3","VGG16","MOBILENET","RESNET50","XCEPTION","DENSENET"]
 
 class TripletLossLayer(Layer):
 	def __init__(self, alpha, **kwargs):
 		self.alpha = alpha
- 		super(TripletLossLayer, self).__init__(**kwargs)
+		super(TripletLossLayer, self).__init__(**kwargs)
 
 	def triplet_loss(self, inputs):
 		a, p, n = inputs
@@ -36,11 +35,18 @@ def triplet_loss(y_true,y_pred):
 	return loss
 
 
-def base_model():
+def base_model(BASE_MODEL):
 	input_=Input(shape=(96,96,3))
 	if BASE_MODEL=="INCEPTIONV3":
 		backend=inceptionv3()
 		print(30*"-"+"got inceptionv3 as the backend"+30*"-")
+	elif BASE_MODEL=="VGG16":
+		backend=vgg16()
+		print(30*"-"+"got vgg16 as the backend"+30*"-")
+	elif BASE_MODEL=="MOBILENET":
+		backend=mobilenetv2()
+		print(30*"-"+"got mobilenetv2 as the backend"+30*"-")
+
 
 	features_temp=backend(input_)
 	flatten=Flatten()(features_temp)
@@ -50,8 +56,8 @@ def base_model():
 	print(model.summary())
 	return model
 
-def model():
-	bs_model=base_model()
+def model(BASE_MODEL):
+	bs_model=base_model(BASE_MODEL)
 
 	input_a=Input(shape=(96,96,3))
 	input_p=Input(shape=(96,96,3))
@@ -85,6 +91,7 @@ def triplet_loss_test():
 
 
 if __name__=="__main__":
-	model=model()
+	BASE_MODEL="MOBILENET"
+	model=model(BASE_MODEL)
 	model.summary()
 
