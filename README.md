@@ -43,7 +43,16 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.p
 		<tbody>
 			<tr>
 				<th>BEST THRESHOLD</th>
-				<td>0.1</td>
+				<td></td>
+				<td></td>
+        <td></td>
+				<td></td>
+        <td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>RECALL</th>
+				<td></td>
 				<td></td>
         <td></td>
 				<td></td>
@@ -52,7 +61,7 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.p
 			</tr>
 			<tr>
 				<th>ACC</th>
-				<td>96.86%</td>
+				<td></td>
 				<td></td>
         <td></td>
 				<td></td>
@@ -61,7 +70,7 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.p
 			</tr>
 			<tr>
 				<th>F-MEASURE</th>
-				<td>87.5%</td>
+				<td></td>
 				<td></td>
         <td></td>
 				<td></td>
