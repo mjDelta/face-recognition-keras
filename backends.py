@@ -205,6 +205,71 @@ def mobilenetv2():
 
 	return model
 
+def resnet50():
+	def conv_(inputs,filters,kernel_sizes,strides):
+		x=Conv2D(int(ALPHA*filters),kernel_sizes,strides=strides,padding="same")(inputs)
+		x=BatchNormalization()(x)
+		x=Activation("relu")(x)
+		return x
+
+	def identity_block(inputs,filters):
+		x=conv_(inputs,filters,(1,1),(1,1))
+
+		x=conv_(x,filters,(3,3),(1,1))
+
+		x=conv_(x,filters*4,(1,1),(1,1))
+
+		x=add([x,inputs])
+
+		return x
+
+	def conv_block(inputs,filters,strides=(2,2)):
+		x=conv_(inputs,filters,(1,1),strides)
+
+		x=conv_(x,filters,(3,3),(1,1))
+
+		x=conv_(x,filters*4,(1,1),(1,1))
+
+		shortcut=conv_(inputs,filters*4,(1,1),strides)
+
+		x=add([x,shortcut])
+
+		return x
+
+	input_=Input(shape=(96,96,3))
+
+	x=conv_(input_,64,(7,7),(2,2))
+
+	x=MaxPooling2D()(x)
+
+	#block1
+	x=conv_block(x,64,strides=(1,1))
+	x=identity_block(x,64)
+	x=identity_block(x,64)
+
+	#block2
+	x=conv_block(x,128)
+	x=identity_block(x,128)
+	x=identity_block(x,128)
+	x=identity_block(x,128)
+
+	#block3
+	x=conv_block(x,256)
+	x=identity_block(x,256)
+	x=identity_block(x,256)
+	x=identity_block(x,256)
+	x=identity_block(x,256)
+	x=identity_block(x,256)
+
+	#block4
+	x=conv_block(x,512)
+	x=identity_block(x,512)
+	x=identity_block(x,512)
+
+	model=Model(input_,x)
+	return model
+
+
 if __name__=="__main__":
-	model=mobilenetv2()
+	model=resnet50()
 	model.summary()
