@@ -9,8 +9,8 @@ The procedure of this repository includes `face detection`, `affine transformati
 
 ## Todo List
 - [x] InceptionV3 backend
-- [ ] MobileNet backend
-- [ ] VGG16 backend
+- [x] MobileNet backend
+- [x] VGG16 backend
 - [ ] ResNet50 backend
 - [ ] Xception backend
 - [ ] DenseNet backend
