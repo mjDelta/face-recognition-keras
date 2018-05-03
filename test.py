@@ -50,7 +50,7 @@ thresholds=np.arange(0.1,1.5,0.01)
 f1_scores=[f1_score(trues,distances<t) for t in thresholds]
 acc_scores=[accuracy_score(trues,distances<t) for t in thresholds]
 
-max_idx=np.argmax(acc_scores)
+max_idx=np.argmax(f1_scores)
 
 plt.plot(thresholds,f1_scores,"r-")
 plt.plot(thresholds,acc_scores,"b-")
