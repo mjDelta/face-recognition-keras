@@ -11,7 +11,7 @@ The procedure of this repository includes `face detection`, `affine transformati
 - [x] InceptionV3 backend
 - [x] MobileNet backend
 - [x] VGG16 backend
-- [ ] ResNet50 backend
+- [x] ResNet50 backend
 - [ ] Xception backend
 - [ ] DenseNet backend
 
@@ -43,7 +43,7 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.p
 		<tbody>
 			<tr>
 				<th>BEST THRESHOLD</th>
-				<td></td>
+				<td>0.15</td>
 				<td></td>
         <td></td>
 				<td></td>
@@ -52,7 +52,7 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.p
 			</tr>
 			<tr>
 				<th>RECALL</th>
-				<td></td>
+				<td>0.3106</td>
 				<td></td>
         <td></td>
 				<td></td>
@@ -61,7 +61,7 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.p
 			</tr>
 			<tr>
 				<th>ACC</th>
-				<td></td>
+				<td>0.9112</td>
 				<td></td>
         <td></td>
 				<td></td>
@@ -70,7 +70,7 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.p
 			</tr>
 			<tr>
 				<th>F-MEASURE</th>
-				<td></td>
+				<td>0.1762</td>
 				<td></td>
         <td></td>
 				<td></td>
