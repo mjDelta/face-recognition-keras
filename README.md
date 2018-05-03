@@ -25,7 +25,7 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/fronte
 In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/train.py">train.py</a>, I trained models with feature extractor.</br>
 ## Choose a Threshold
 As triplet loss is defined by Euclidean distance, we don't have a threshold to split embeddings. So, we need to choose a threshold.</br>
-In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.py">test.py</a>, I searched threshold violently.</br>
+In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.py">test.py</a>, I searched threshold violently mainly on f1 score.</br>
 ## Results
 <br>
 		<table style='border:1px solid #e8e8e8;'>
