@@ -29,7 +29,7 @@ for face_dir in os.listdir(dir_path):
 	full_face_dir=os.path.join(dir_path,face_dir)
 	for face_name in os.listdir(full_face_dir):
 		names.append(face_dir)
-		faces.append(imread(os.path.join(full_face_dir,face_name)))
+		faces.append(imread(os.path.join(full_face_dir,face_name))/255.)
 faces=np.array(faces)
 faces=faces.reshape(len(faces),96,96,3)
 embs=features_extractor.predict(faces)
