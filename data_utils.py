@@ -32,9 +32,9 @@ def triplet_generator(dir_path="lfw_alig2",batch_size=2):
 
 			neg_face=os.path.join(dir_path,neg_dir,os.listdir(os.path.join(dir_path,neg_dir))[np.random.choice(len(os.listdir(os.path.join(dir_path,neg_dir))))])
 
-			anchor=imread(anchor_face)
-			posi=imread(posi_face)
-			nega=imread(neg_face)
+			anchor=imread(anchor_face)/255.
+			posi=imread(posi_face)/255.
+			nega=imread(neg_face)/255.
 
 			anchor_faces[i]=anchor
 			posi_faces[i]=posi
