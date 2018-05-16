@@ -49,24 +49,30 @@ def triplet_generator(dir_path="lfw_alig2",batch_size=2):
 
 		yield [anchor_faces,posi_faces,nega_faces],None		
 
-def triplet_generator2(model,dir_path="lfw_alig2/",batch_size=32):
-	def random_choose_faces(dir_path,batch_size):
-		faces_dirs=os.listdir(dir_path)
-		faces_paths=[os.path.join(dir_path,dir_) for dir_ in faces_dirs]
+class triplet_generator2:
+	def __init__(self,model,dir_path="lfw_alig2/",batch_size=32,alpha=0.25):
+		self.model=model
+		self.dir_path=dir_path
+		self.batch_size=batch_size
+		self.alpha=alpha
 
-		choosed_faces_dirs=np.random.choice(faces_paths,batch_size,replace=False)
+	def random_choose_faces(self):
+		faces_dirs=os.listdir(self.dir_path)
+		faces_paths=[os.path.join(self.dir_path,dir_) for dir_ in faces_dirs]
+
+		choosed_faces_dirs=np.random.choice(faces_paths,self.batch_size,replace=False)
 
 		choosed_faces_values=[imread(os.path.join(face_dir,face_name))/255. for face_dir in choosed_faces_dirs for face_name in os.listdir(face_dir)]
-		choosed_faces_names=[face_dir[len(dir_path):] for face_dir in choosed_faces_dirs for face_name in os.listdir(face_dir)]
+		choosed_faces_names=[face_dir[len(self.dir_path):] for face_dir in choosed_faces_dirs for face_name in os.listdir(face_dir)]
 
 		return choosed_faces_values,choosed_faces_names
 
-	def get_triplet(model,choosed_faces_values,choosed_faces_names,alpha=0.25):
+	def get_triplet(self,choosed_faces_values,choosed_faces_names):
 		anchors=[];positives=[];negatives=[]
 		anchors_names=[];positives_names=[];negatives_names=[]
 		choosed_faces_values=np.array(choosed_faces_values)
 		choosed_faces_values=choosed_faces_values.reshape((len(choosed_faces_values),96,96,3))
-		choosed_faces_embeddings=model.predict(choosed_faces_values)
+		choosed_faces_embeddings=self.model.predict(choosed_faces_values)
 		
 		dist_mat=pairwise_distances(choosed_faces_embeddings,metric="sqeuclidean")
 		cats=np.unique(choosed_faces_names,axis=0)
@@ -76,7 +82,7 @@ def triplet_generator2(model,dir_path="lfw_alig2/",batch_size=32):
 				continue
 			for i,j in itertools.combinations(pos_samples,2):
 				pos_dist=dist_mat[i,j]
-				neg_conds=np.where((c!=np.array(choosed_faces_names))*(dist_mat[i]-pos_dist<alpha))
+				neg_conds=np.where((c!=np.array(choosed_faces_names))*(dist_mat[i]-pos_dist<self.alpha))
 				if len(neg_conds)>0:
 					rand_idx=np.random.choice(len(neg_conds))
 					idx=neg_conds[rand_idx]
@@ -84,22 +90,19 @@ def triplet_generator2(model,dir_path="lfw_alig2/",batch_size=32):
 					anchors_names.append(choosed_faces_names[i]);positives_names.append(choosed_faces_names[j]);negatives_names.append(choosed_faces_names[idx])
 		print("get_triplets"+str(len(anchors)))
 		return anchors,positives,negatives,anchors_names,positives_names,negatives_names
-
-	while True:	
-		anchors=[];positives=[];negatives=[]
-		values,names=random_choose_faces(dir_path,batch_size)
-		ans,pos,nes,anchors_names,positives_names,negatives_names=get_triplet(model,values,names)
-		anchors.extend(ans);positives.extend(pos);negatives.extend(nes)
-		while(len(anchors)<batch_size):
-			values,names=random_choose_faces(dir_path,batch_size)
-			ans,pos,nes,anchors_names,positives_names,negatives_names=get_triplet(model,values,names)
+	def flow(self):
+		while True:	
+			anchors=[];positives=[];negatives=[]
+			values,names=self.random_choose_faces()
+			ans,pos,nes,anchors_names,positives_names,negatives_names=self.get_triplet(values,names)
 			anchors.extend(ans);positives.extend(pos);negatives.extend(nes)
-		anchors=np.array(anchors[:batch_size]);positives=np.array(positives[:batch_size]);negatives=np.array(negatives[:batch_size])
-		yield [anchors,positives,negatives],None
+			while(len(anchors)<self.batch_size):
+				values,names=self.random_choose_faces()
+				ans,pos,nes,anchors_names,positives_names,negatives_names=self.get_triplet(values,names)
+				anchors.extend(ans);positives.extend(pos);negatives.extend(nes)
+			anchors=np.array(anchors[:self.batch_size]);positives=np.array(positives[:self.batch_size]);negatives=np.array(negatives[:self.batch_size])
+			yield [anchors,positives,negatives],None
 
-
-
-			
 if __name__=="__main__":
 	'''g=triplet_generator()
 	for i in range(10):
