@@ -14,5 +14,7 @@ features_extractor=facenet.get_layer(layer_name)
 
 train_g=triplet_generator2(features_extractor,dir_path="lfw_alig2_train",batch_size=32)
 
-facenet.fit_generator(train_g,epochs=500,steps_per_epoch=60,verbose=1,
+for i in range(500):
+  [a,p,n],_=train_g.__next__()
+  facenet.fit([a,p,n],epochs=10,verbose=1,
 		      callbacks=[ModelCheckpoint("models/"+BASE_MODEL+".h5",monitor="loss",mode="min")])
