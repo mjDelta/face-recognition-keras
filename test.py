@@ -45,7 +45,7 @@ for i in range(len(embs)):
 		else:
 			trues.append(0)
 
-thresholds=np.arange(0.1,1.5,0.01)
+thresholds=np.arange(0.1,10.,0.01)
 
 f1_scores=[f1_score(trues,distances<t) for t in thresholds]
 acc_scores=[accuracy_score(trues,distances<t) for t in thresholds]
