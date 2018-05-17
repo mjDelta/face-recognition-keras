@@ -44,37 +44,37 @@ In <a href="https://github.com/mjDelta/face-recognition-keras/blob/master/test.p
 		<tbody>
 			<tr>
 				<th>BEST THRESHOLD</th>
-				<td>0.15</td>
-				<td>0.77</td>
+				<td></td>
+				<td>4.46</td>
         <td></td>
-				<td>0.38</td>
+				<td>3.22</td>
         <td></td>
 				<td></td>
 			</tr>
 			<tr>
 				<th>RECALL</th>
-				<td>0.3106</td>
-				<td>0.3668</td>
+				<td></td>
+				<td>0.3997</td>
         <td></td>
-				<td>0.2422</td>
+				<td>0.3774</td>
         <td></td>
 				<td></td>
 			</tr>
 			<tr>
 				<th>ACC</th>
-				<td>0.9112</td>
-				<td>0.949</td>
+				<td></td>
+				<td>0.9474</td>
         <td></td>
-				<td>0.9164</td>
+				<td>0.9511</td>
         <td></td>
 				<td></td>
 			</tr>
 			<tr>
 				<th>F-MEASURE</th>
-				<td>0.1762</td>
-				<td>0.2685</td>
+				<td></td>
+				<td>0.3173</td>
         <td></td>
-				<td>0.1504</td>
+				<td>0.3191</td>
         <td></td>
 				<td></td>
 			</tr>
