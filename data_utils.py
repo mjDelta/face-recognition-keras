@@ -3,7 +3,7 @@ import os
 from scipy.misc import imread
 from sklearn.metrics.pairwise import pairwise_distances
 import itertools
-
+import gc
 def triplet_generator(dir_path="lfw_alig2",batch_size=2):
 	faces_dir=os.listdir(dir_path)
 	np.random.seed(1)
@@ -89,6 +89,9 @@ class triplet_generator2:
 					anchors.append(choosed_faces_values[i]);positives.append(choosed_faces_values[j]);negatives.append(choosed_faces_values[idx])
 					anchors_names.append(choosed_faces_names[i]);positives_names.append(choosed_faces_names[j]);negatives_names.append(choosed_faces_names[idx])
 		print("get_triplets"+str(len(anchors)))
+		del choosed_faces_values
+		del choosed_faces_names
+		gc.collect()
 		return anchors,positives,negatives,anchors_names,positives_names,negatives_names
 	def flow(self):
 		while True:	
@@ -96,10 +99,18 @@ class triplet_generator2:
 			values,names=self.random_choose_faces()
 			ans,pos,nes,anchors_names,positives_names,negatives_names=self.get_triplet(values,names)
 			anchors.extend(ans);positives.extend(pos);negatives.extend(nes)
+			del ans
+			del pos
+			del nes
+			gc.collect()
 			while(len(anchors)<self.batch_size):
 				values,names=self.random_choose_faces()
 				ans,pos,nes,anchors_names,positives_names,negatives_names=self.get_triplet(values,names)
 				anchors.extend(ans);positives.extend(pos);negatives.extend(nes)
+				del ans
+				del pos
+				del nes
+				gc.collect()
 			anchors=np.array(anchors[:self.batch_size]);positives=np.array(positives[:self.batch_size]);negatives=np.array(negatives[:self.batch_size])
 			yield [anchors,positives,negatives],None
 
